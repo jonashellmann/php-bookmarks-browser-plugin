@@ -1,0 +1,33 @@
+{
+
+  "manifest_version": 2,
+  "name": "PHP-Bookmarks Browser Plugin",
+  "version": "0.0.1",
+
+  "description": "Browser plugin for a faster access to bookmarks of PHP-Bookmarks.",
+
+  "icons": {
+    "48": "images/php-bookmarks-48.png"
+  },
+
+  "browser_action": {
+    "default_icon": "images/php-bookmarks-32.png",
+    "default_title": "PHP-Bookmarks",
+    "default_popup": "popup/php-bookmark-popup.html"
+  },
+  
+  "applications": {
+    "gecko": {
+      "id": "php-bookmarks@jonas-hellmann.de"  
+    }
+  },
+  
+  "background": {
+    "scripts": ["background.js"]
+  },
+  
+  "permissions": {
+    "cross-domain-content": ["*://*/*"]
+  }
+
+}
