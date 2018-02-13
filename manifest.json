@@ -20,14 +20,6 @@
     "gecko": {
       "id": "php-bookmarks@jonas-hellmann.de"  
     }
-  },
-  
-  "background": {
-    "scripts": ["background.js"]
-  },
-  
-  "permissions": {
-    "cross-domain-content": ["*://*/*"]
   }
 
 }
