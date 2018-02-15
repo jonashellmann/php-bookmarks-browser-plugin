@@ -12,9 +12,17 @@
 
   "browser_action": {
     "default_icon": "images/php-bookmarks-32.png",
-    "default_title": "PHP-Bookmarks",
-    "default_popup": "popup/php-bookmark-popup.html"
+    "default_title": "PHP-Bookmarks"
   },
+  
+  "background": {
+    "scripts": ["background.js"]
+  },
+  
+  "permissions": [
+	"<all_urls>",
+	"tabs"
+  ],
   
   "applications": {
     "gecko": {
