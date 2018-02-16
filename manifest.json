@@ -21,8 +21,13 @@
   
   "permissions": [
 	"<all_urls>",
-	"tabs"
+	"tabs",
+	"storage"
   ],
+  
+  "options_ui": { 
+	"page": "options.html"
+  },
   
   "applications": {
     "gecko": {
