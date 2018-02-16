@@ -4,6 +4,8 @@ function buttonClicked() {
 		const {settings} = res;
 		var baseurl = settings.baseurl;
 		if(baseurl !== "http://example.com/bookmarks/") {
+			// TODO Statt Tab öffnen browser.browserAction.setPopup?
+			// TODO Username als Parameter übergeben und so Name in Loginfeld schon setzen
             var querying = browser.tabs.query({url: baseurl + "*"});
             querying.then((tab) => {
                 if(tab.length > 0) {
