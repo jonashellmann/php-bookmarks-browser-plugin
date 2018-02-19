@@ -1,3 +1,11 @@
+var getSettings =  browser.storage.local.get("settings");
+getSettings.then((res) => {
+	const {settings} = res;
+	
+	document.querySelector("#baseurl").value = settings.baseurl;
+	document.querySelector("#login").value = settings.username;
+});
+
 function saveOptions(e) {
 	var baseurl = document.querySelector("#baseurl").value;
     if (baseurl.substr(-1) != '/') {
@@ -7,7 +15,7 @@ function saveOptions(e) {
     var settings = {
         settings: {
             baseurl: baseurl,
-            login: document.querySelector("#login").value
+            username: document.querySelector("#login").value
         },
     };
     

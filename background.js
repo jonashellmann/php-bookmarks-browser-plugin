@@ -3,19 +3,9 @@ function buttonClicked() {
 	getSettings.then((res) => {
 		const {settings} = res;
 		var baseurl = settings.baseurl;
-		if(baseurl !== "http://example.com/bookmarks/") {
-			// TODO Statt Tab öffnen browser.browserAction.setPopup?
-			// TODO Username als Parameter übergeben und so Name in Loginfeld schon setzen
-            var querying = browser.tabs.query({url: baseurl + "*"});
-            querying.then((tab) => {
-                if(tab.length > 0) {
-                    browser.tabs.update(tab[0].id, { active: true })
-                } else {
-                    browser.tabs.create({url:baseurl, active:true});
-                }});
-        } else {
-            browser.runtime.openOptionsPage();
-        }
+		if(baseurl === 'http://example.com/bookmarks/') {
+			browser.runtime.openOptionsPage();
+		}
 	});
 }
 
@@ -44,5 +34,22 @@ function handleInstalled(details) {
 	}
 }
 
+function onUpdateSettings(settings) {
+	var url = settings.baseurl + '?username=' + settings.username;
+	if(url !== 'http://example.com/bookmarks/') {
+		browser.browserAction.setPopup({popup: url});
+	}
+	else {
+		browser.browserAction.setPopup({popup: ''});
+	}
+    
+}
+
 browser.browserAction.onClicked.addListener(buttonClicked);
 browser.runtime.onInstalled.addListener(handleInstalled);
+browser.runtime.onMessage.addListener(msg => {
+    if(msg.type == "settings-updated") {
+        const {settings} = msg.message;
+        onUpdateSettings(settings);
+    }
+});
