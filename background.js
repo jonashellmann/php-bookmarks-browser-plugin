@@ -53,3 +53,8 @@ browser.runtime.onMessage.addListener(msg => {
         onUpdateSettings(settings);
     }
 });
+var getSettings = browser.storage.local.get("settings"); 
+getSettings.then((res) => { 
+	const {settings} = res; 
+	onUpdateSettings(settings); 
+});
