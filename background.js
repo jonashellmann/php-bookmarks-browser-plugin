@@ -9,20 +9,6 @@ function buttonClicked() {
 	});
 }
 
-function postData(url, data) {
-  return fetch(url, {
-    body: JSON.stringify(data),
-    credentials: 'same-origin',
-    headers: {
-      'user-agent': 'Mozilla/4.0 MDN Example',
-      'content-type': 'application/json'
-    },
-    method: 'POST',
-    mode: 'cors',
-  })
-  .then(response => response.json())
-}
-
 function handleInstalled(details) {
 	if(details.reason=="install") {
 		browser.storage.local.set({
