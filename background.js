@@ -22,13 +22,26 @@ function handleInstalled(details) {
 
 function onUpdateSettings(settings) {
 	var url = settings.baseurl + '?username=' + settings.username;
-	if(url !== 'http://example.com/bookmarks/') {
+	if(settings.baseurl !== 'http://example.com/bookmarks/') {
 		browser.browserAction.setPopup({popup: url});
 	}
 	else {
 		browser.browserAction.setPopup({popup: ''});
 	}
     
+}
+
+function handleTabActivated(activeInfo) {
+	var getSettings = browser.storage.local.get("settings");
+	getSettings.then((res) => {
+		const {settings} = res;
+		if (settings.baseurl !== 'http://example.com/bookmarks/') {
+			var title = activeInfo.title;
+			var url = encodeURIComponent(activeInfo.url);
+			var fullUrl = settings.baseurl + "?username=" + settings.username + "&title=" + title + "&url" + url;
+			browser.browserAction.setPopup({popup: fullUrl});
+		}
+	}
 }
 
 browser.browserAction.onClicked.addListener(buttonClicked);
@@ -39,6 +52,7 @@ browser.runtime.onMessage.addListener(msg => {
         onUpdateSettings(settings);
     }
 });
+browsers.tabs.onActivated.addEventListener(handleTabActivated);
 var getSettings = browser.storage.local.get("settings"); 
 getSettings.then((res) => { 
 	const {settings} = res; 
