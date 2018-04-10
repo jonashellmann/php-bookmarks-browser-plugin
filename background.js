@@ -10,6 +10,8 @@ function buttonClicked() {
 }
 
 function handleInstalled(details) {
+	console.log("Installed");
+	console.log(details.reason);
 	if(details.reason=="install") {
 		browser.storage.local.set({
             settings: {
@@ -41,7 +43,7 @@ function handleTabActivated(activeInfo) {
 			var fullUrl = settings.baseurl + "?username=" + settings.username + "&title=" + title + "&url" + url;
 			browser.browserAction.setPopup({popup: fullUrl});
 		}
-	}
+	});
 }
 
 browser.browserAction.onClicked.addListener(buttonClicked);
@@ -52,7 +54,7 @@ browser.runtime.onMessage.addListener(msg => {
         onUpdateSettings(settings);
     }
 });
-browsers.tabs.onActivated.addEventListener(handleTabActivated);
+browser.tabs.onActivated.addListener(handleTabActivated);
 var getSettings = browser.storage.local.get("settings"); 
 getSettings.then((res) => { 
 	const {settings} = res; 
