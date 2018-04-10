@@ -10,8 +10,6 @@ function buttonClicked() {
 }
 
 function handleInstalled(details) {
-	console.log("Installed");
-	console.log(details.reason);
 	if(details.reason=="install") {
 		browser.storage.local.set({
             settings: {
@@ -38,10 +36,15 @@ function handleTabActivated(activeInfo) {
 	getSettings.then((res) => {
 		const {settings} = res;
 		if (settings.baseurl !== 'http://example.com/bookmarks/') {
-			var title = activeInfo.title;
-			var url = encodeURIComponent(activeInfo.url);
-			var fullUrl = settings.baseurl + "?username=" + settings.username + "&title=" + title + "&url" + url;
-			browser.browserAction.setPopup({popup: fullUrl});
+			var querying = browser.tabs.query({currentWindow: true, active: true});
+			querying.then((tabs) => {
+				for(let tab of tabs) {
+					var title = tab.title;
+					var url = encodeURIComponent(tab.url);
+					var fullUrl = settings.baseurl + "?username=" + settings.username + "&title=" + title + "&url=" + url;
+					browser.browserAction.setPopup({popup: fullUrl});
+				}
+			});
 		}
 	});
 }
